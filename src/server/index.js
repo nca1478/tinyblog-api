@@ -7,6 +7,9 @@ import chalk from 'chalk'
 // Debugging utility
 const debug = require('debug')('tinyBlog:DB')
 
+// Api Routes
+import { userRoutes } from '../services/users'
+
 // DB Connection and Associations
 import sequelize from '../db/connection'
 
@@ -17,6 +20,7 @@ class Server {
 
         // Settings
         this.middlewares()
+        this.routes()
     }
 
     middlewares() {
@@ -38,8 +42,12 @@ class Server {
     listen() {
         const port = process.env.PORT
         this.app.listen(port, () => {
-            console.log(`${chalk.yellow('[tinyBlog-api:REST]')} Listening on port ${port}`)
+            console.log(`${chalk.yellow('[tinyBlog-api:REST]')} Escuchando en puerto ${port}`)
         })
+    }
+
+    routes() {
+        this.app.use('/api/v1/users', userRoutes)
     }
 
     startDBConnection() {
