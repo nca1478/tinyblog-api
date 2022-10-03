@@ -4,6 +4,12 @@ import logger from 'morgan'
 import cors from 'cors'
 import chalk from 'chalk'
 
+// Debugging utility
+const debug = require('debug')('tinyBlog:DB')
+
+// DB Connection and Associations
+import sequelize from '../db/connection'
+
 class Server {
     constructor() {
         this.app = express()
@@ -32,8 +38,23 @@ class Server {
     listen() {
         const port = process.env.PORT
         this.app.listen(port, () => {
-            console.log(`${chalk.yellow('[tiny-blog-api:REST]')} Listening on port ${port}`)
+            console.log(`${chalk.yellow('[tinyBlog-api:REST]')} Listening on port ${port}`)
         })
+    }
+
+    startDBConnection() {
+        sequelize
+            .sync({ force: false })
+            .then(() => {
+                debug('Conexión a base de datos exitosa')
+                console.log(`${chalk.yellow('[tinyBlog:DB]')} Conexión a base de datos exitosa`)
+            })
+            .catch(error => {
+                console.log(error)
+                console.log(
+                    `${chalk.red('[tinyBlog:DB]')} Error de conexión a la base de datos ${error}`,
+                )
+            })
     }
 }
 
