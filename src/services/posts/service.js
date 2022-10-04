@@ -47,6 +47,15 @@ class PostService {
             throw err
         }
     }
+
+    async deletePost(id) {
+        try {
+            let result = await this.post.update({ active: false }, { where: { id } })
+            return result
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 export default PostService

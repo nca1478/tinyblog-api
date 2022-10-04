@@ -50,6 +50,13 @@ class PostRouter {
             [verifyToken, findByIdPostValidation(), createPostValidation(), showValErrors],
             this.controller.update.bind(this.controller),
         )
+
+        // Delete Post
+        this.router.delete(
+            '/:id',
+            [verifyToken, findByIdPostValidation(), showValErrors],
+            this.controller.delete.bind(this.controller),
+        )
     }
 
     setRoutes() {

@@ -84,6 +84,20 @@ class PostController extends PostService {
             res.status(500).json(error)
         }
     }
+
+    async delete(req, res) {
+        try {
+            const id = req.params.id
+            const result = await this.deletePost(id)
+            const response = responsePOST({
+                msg: 'Post borrado exitosamente.',
+            })
+            return res.status(200).json(response)
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
 }
 
 export default PostController
