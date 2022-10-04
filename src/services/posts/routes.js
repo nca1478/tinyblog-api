@@ -51,6 +51,13 @@ class PostRouter {
             this.controller.update.bind(this.controller),
         )
 
+        // Publish/Unpublish Post
+        this.router.put(
+            '/:id/publish',
+            [verifyToken, findByIdPostValidation(), showValErrors],
+            this.controller.publish.bind(this.controller),
+        )
+
         // Delete Post
         this.router.delete(
             '/:id',

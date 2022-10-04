@@ -48,6 +48,15 @@ class PostService {
         }
     }
 
+    async publishPost(id, status) {
+        try {
+            let result = await this.post.update({ published: status }, { where: { id } })
+            return result
+        } catch (err) {
+            throw err
+        }
+    }
+
     async deletePost(id) {
         try {
             let result = await this.post.update({ active: false }, { where: { id } })

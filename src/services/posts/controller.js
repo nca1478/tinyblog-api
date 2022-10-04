@@ -85,6 +85,28 @@ class PostController extends PostService {
         }
     }
 
+    async publish(req, res) {
+        try {
+            const id = req.params.id
+            const status = req.query.status === 'true' ? true : false
+            const result = await this.publishPost(id, status)
+            if (!result) {
+                const error = responseError({
+                    msg: 'Error publicando post. Intente nuevamente.',
+                })
+                return res.status(401).json(error)
+            } else {
+                const response = responsePOST({
+                    msg: `${status ? 'Publicación' : 'Despublicación'} Exitosa.`,
+                })
+                return res.status(200).json(response)
+            }
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
+
     async delete(req, res) {
         try {
             const id = req.params.id
