@@ -3,7 +3,7 @@ import { showValErrors } from '../../middlewares/showValErrors'
 import { verifyToken } from '../../helpers/jwtHandler'
 
 // Validate Data
-import { createPostValidation } from './validateData'
+import { createPostValidation, findByIdPostValidation } from './validateData'
 
 class PostRouter {
     constructor(router, controller) {
@@ -35,6 +35,13 @@ class PostRouter {
             '/',
             [verifyToken, showValErrors],
             this.controller.findAll.bind(this.controller),
+        )
+
+        // Get Post by ID
+        this.router.get(
+            '/:id',
+            [findByIdPostValidation(), showValErrors],
+            this.controller.findById.bind(this.controller),
         )
     }
 

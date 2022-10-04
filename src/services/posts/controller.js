@@ -46,6 +46,18 @@ class PostController extends PostService {
             res.status(500).json(error)
         }
     }
+
+    async findById(req, res) {
+        try {
+            const postId = req.params.id
+            const result = await this.findPostById(postId)
+            const response = responseGET(null, result)
+            return res.status(200).json(response)
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
 }
 
 export default PostController

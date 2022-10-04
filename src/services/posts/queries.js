@@ -20,4 +20,18 @@ const queryPostsList = (userId, user, paginationData) => {
     }
 }
 
-export { queryPostsList }
+const queryPostById = (postId, user) => {
+    return {
+        where: { id: postId, active: true },
+        attributes: { exclude: ['userId'] },
+        include: [
+            {
+                model: user,
+                as: 'user',
+                attributes: ['id', 'name', 'email', 'role'],
+            },
+        ],
+    }
+}
+
+export { queryPostsList, queryPostById }
