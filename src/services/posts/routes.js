@@ -36,6 +36,9 @@ class PostRouter {
         // Get Posts (Published/Unpublish)
         this.router.get('/published', this.controller.findAllbyPub.bind(this.controller))
 
+        // Get Last Posts
+        this.router.get('/lastposts', this.controller.lastPosts.bind(this.controller))
+
         // Get Posts (Admin Dashboard)
         this.router.get(
             '/',

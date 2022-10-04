@@ -32,14 +32,6 @@ Post.init(
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        numLikes: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0,
-        },
-        numDislikes: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0,
-        },
         active: {
             type: DataTypes.BOOLEAN,
             defaultValue: true,

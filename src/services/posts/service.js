@@ -1,5 +1,11 @@
 // Queries
-import { queryPostsList, queryPostById, querySearchPosts, queryPostsPublished } from './queries'
+import {
+    queryPostsList,
+    queryPostById,
+    querySearchPosts,
+    queryPostsPublished,
+    queryLastPosts,
+} from './queries'
 
 class PostService {
     constructor(dependenciesData) {
@@ -37,6 +43,11 @@ class PostService {
     async findPostsPublished(status, paginationData) {
         const query = queryPostsPublished(status, this.user, paginationData)
         return await this.post.findAndCountAll(query)
+    }
+
+    async getLastPosts(limit = 4) {
+        const query = queryLastPosts(limit, this.user)
+        return await this.post.findAll(query)
     }
 
     async findPosts(userId, paginationData) {
