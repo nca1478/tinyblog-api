@@ -39,6 +39,25 @@ const querySearchPosts = (search, user) => {
     }
 }
 
+const queryPostsPublished = (status, user, paginationData) => {
+    const { limit, skip } = paginationData
+    return {
+        where: { published: status, active: true },
+        order: [['createdAt', 'DESC']],
+        attributes: { exclude: ['userId'] },
+        distinct: true,
+        include: [
+            {
+                model: user,
+                as: 'user',
+                attributes: ['id', 'name', 'email', 'role'],
+            },
+        ],
+        limit,
+        offset: skip,
+    }
+}
+
 const queryPostById = (postId, user) => {
     return {
         where: { id: postId, active: true },
@@ -53,4 +72,4 @@ const queryPostById = (postId, user) => {
     }
 }
 
-export { queryPostsList, queryPostById, querySearchPosts }
+export { queryPostsList, queryPostById, querySearchPosts, queryPostsPublished }

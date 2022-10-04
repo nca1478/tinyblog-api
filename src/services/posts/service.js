@@ -1,5 +1,5 @@
 // Queries
-import { queryPostsList, queryPostById, querySearchPosts } from './queries'
+import { queryPostsList, queryPostById, querySearchPosts, queryPostsPublished } from './queries'
 
 class PostService {
     constructor(dependenciesData) {
@@ -32,6 +32,11 @@ class PostService {
     async searchPosts(search) {
         const query = querySearchPosts(search, this.user)
         return await this.post.findAll(query)
+    }
+
+    async findPostsPublished(status, paginationData) {
+        const query = queryPostsPublished(status, this.user, paginationData)
+        return await this.post.findAndCountAll(query)
     }
 
     async findPosts(userId, paginationData) {

@@ -43,6 +43,22 @@ class PostController extends PostService {
         }
     }
 
+    async findAllbyPub(req, res) {
+        const page = req.query.page ? req.query.page : 1
+        const limit = req.query.limit ? req.query.limit : 8
+
+        try {
+            const status = req.query.status === 'true' ? true : false
+            const paginationData = paginate(page, limit)
+            const result = await this.findPostsPublished(status, paginationData)
+            const response = responseGET(paginationData.pagination, result)
+            return res.status(200).json(response)
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
+
     async findAll(req, res) {
         const page = req.query.page ? req.query.page : 1
         const limit = req.query.limit ? req.query.limit : 4
