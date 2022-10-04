@@ -1,10 +1,11 @@
 // Helpers
 import { showValErrors } from '../../middlewares/showValErrors'
+import { verifyToken } from '../../helpers/jwtHandler'
 
 // Validate Data
-import { createUserValidation, loginUserValidation } from './validateData'
+import { createPostValidation } from './validateData'
 
-class UserRouter {
+class PostRouter {
     constructor(router, controller) {
         this.error = new Error()
 
@@ -22,18 +23,11 @@ class UserRouter {
             this.controller = controller
         }
 
-        // Create New User
+        // Create New Post
         this.router.post(
             '/',
-            [createUserValidation(), showValErrors],
+            [verifyToken, createPostValidation(), showValErrors],
             this.controller.create.bind(this.controller),
-        )
-
-        // Login User
-        this.router.post(
-            '/login',
-            [loginUserValidation(), showValErrors],
-            this.controller.login.bind(this.controller),
         )
     }
 
@@ -42,4 +36,4 @@ class UserRouter {
     }
 }
 
-export default UserRouter
+export default PostRouter
