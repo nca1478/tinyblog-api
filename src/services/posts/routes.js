@@ -43,6 +43,13 @@ class PostRouter {
             [findByIdPostValidation(), showValErrors],
             this.controller.findById.bind(this.controller),
         )
+
+        // Update Post
+        this.router.put(
+            '/:id/update',
+            [verifyToken, findByIdPostValidation(), createPostValidation(), showValErrors],
+            this.controller.update.bind(this.controller),
+        )
     }
 
     setRoutes() {

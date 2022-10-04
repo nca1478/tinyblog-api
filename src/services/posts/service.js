@@ -38,6 +38,15 @@ class PostService {
         const query = queryPostById(postId, this.user)
         return this.post.findOne(query)
     }
+
+    async updatePost(id, data) {
+        try {
+            const postResponse = await this.post.update({ ...data }, { where: { id } })
+            return postResponse
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 export default PostService

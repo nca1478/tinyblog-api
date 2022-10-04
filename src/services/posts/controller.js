@@ -58,6 +58,32 @@ class PostController extends PostService {
             res.status(500).json(error)
         }
     }
+
+    async update(req, res) {
+        try {
+            const id = req.params.id
+            const data = {
+                title: req.body.title,
+                summary: req.body.summary,
+                body: req.body.body,
+            }
+            const result = await this.updatePost(id, data)
+            if (!result) {
+                const error = responseError({
+                    msg: 'Error actualizando post. Intente nuevamente.',
+                })
+                return res.status(401).json(error)
+            } else {
+                const response = responsePOST({
+                    msg: 'Post actualizado exitosamente.',
+                })
+                return res.status(200).json(response)
+            }
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
 }
 
 export default PostController
