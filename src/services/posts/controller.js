@@ -1,5 +1,6 @@
 // Helpers
 import { responseError, responseGET, responsePOST } from '../../helpers/response'
+import { paginate } from '../../helpers/pagination'
 
 // Service Class
 import PostService from './service'
@@ -24,6 +25,22 @@ class PostController extends PostService {
                 post: result,
             })
             return res.status(201).json(response)
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
+
+    async findAll(req, res) {
+        const page = req.query.page ? req.query.page : 1
+        const limit = req.query.limit ? req.query.limit : 4
+
+        try {
+            const userId = req.user.id
+            const paginationData = paginate(page, limit)
+            const result = await this.findPosts(userId, paginationData)
+            const response = responseGET(paginationData.pagination, result)
+            return res.status(200).json(response)
         } catch (err) {
             const error = responseError([err])
             res.status(500).json(error)

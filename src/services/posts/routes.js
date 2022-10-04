@@ -29,6 +29,13 @@ class PostRouter {
             [verifyToken, createPostValidation(), showValErrors],
             this.controller.create.bind(this.controller),
         )
+
+        // Get Posts (Admin Dashboard)
+        this.router.get(
+            '/',
+            [verifyToken, showValErrors],
+            this.controller.findAll.bind(this.controller),
+        )
     }
 
     setRoutes() {

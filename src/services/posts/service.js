@@ -1,3 +1,6 @@
+// Queries
+import { queryPostsList } from './queries'
+
 class PostService {
     constructor(dependenciesData) {
         this.error = new Error()
@@ -8,6 +11,13 @@ class PostService {
         } else {
             this.post = dependenciesData.post
         }
+
+        if (!dependenciesData.user) {
+            this.error.dependencyError = 'User Model is undefined'
+            throw this.error.dependencyError
+        } else {
+            this.user = dependenciesData.user
+        }
     }
 
     async createPost(data) {
@@ -17,6 +27,11 @@ class PostService {
         } catch (err) {
             throw err
         }
+    }
+
+    async findPosts(userId, paginationData) {
+        const query = queryPostsList(userId, this.user, paginationData)
+        return await this.post.findAndCountAll(query)
     }
 }
 
