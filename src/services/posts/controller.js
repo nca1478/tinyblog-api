@@ -31,6 +31,18 @@ class PostController extends PostService {
         }
     }
 
+    async search(req, res) {
+        try {
+            const search = req.query.q
+            const result = await this.searchPosts(search)
+            const response = responseGET(null, result)
+            return res.status(200).json(response)
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
+
     async findAll(req, res) {
         const page = req.query.page ? req.query.page : 1
         const limit = req.query.limit ? req.query.limit : 4

@@ -20,6 +20,25 @@ const queryPostsList = (userId, user, paginationData) => {
     }
 }
 
+const querySearchPosts = (search, user) => {
+    return {
+        where: {
+            title: search ? { [Op.like]: '%' + search + '%' } : { [Op.ne]: null },
+            published: true,
+            active: true,
+        },
+        order: [['createdAt', 'DESC']],
+        attributes: { exclude: ['userId'] },
+        include: [
+            {
+                model: user,
+                as: 'user',
+                attributes: ['id', 'name', 'email', 'role'],
+            },
+        ],
+    }
+}
+
 const queryPostById = (postId, user) => {
     return {
         where: { id: postId, active: true },
@@ -34,4 +53,4 @@ const queryPostById = (postId, user) => {
     }
 }
 
-export { queryPostsList, queryPostById }
+export { queryPostsList, queryPostById, querySearchPosts }
