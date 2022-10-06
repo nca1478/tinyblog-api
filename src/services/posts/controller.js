@@ -125,6 +125,28 @@ class PostController extends PostService {
         }
     }
 
+    async updateVisits(req, res) {
+        try {
+            const result = await this.updatePostVisits(req.params.id)
+
+            if (!result) {
+                const error = responseError({
+                    msg: 'Error actualizando número de visitas.',
+                })
+                return res.status(401).json(error)
+            } else {
+                const response = responsePOST({
+                    result,
+                    msg: 'Número de visitas actualizado exitosamente.',
+                })
+                return res.status(200).json(response)
+            }
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
+
     async publish(req, res) {
         try {
             const id = req.params.id

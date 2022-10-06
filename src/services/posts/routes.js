@@ -60,6 +60,9 @@ class PostRouter {
             this.controller.update.bind(this.controller),
         )
 
+        // Update Num Visits
+        this.router.put('/:id/visits', this.controller.updateVisits.bind(this.controller))
+
         // Publish/Unpublish Post
         this.router.put(
             '/:id/publish',

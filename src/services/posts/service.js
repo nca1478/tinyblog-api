@@ -69,6 +69,23 @@ class PostService {
         }
     }
 
+    async updatePostVisits(id) {
+        let numVisits = 0
+
+        try {
+            const post = await this.post.findOne({
+                where: { id, active: true },
+            })
+
+            numVisits = post.dataValues.numVisits + 1
+
+            const postResponse = await this.post.update({ numVisits }, { where: { id } })
+            return { postId: id, numVisits }
+        } catch (err) {
+            throw err
+        }
+    }
+
     async publishPost(id, status) {
         try {
             let result = await this.post.update({ published: status }, { where: { id } })
