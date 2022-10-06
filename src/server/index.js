@@ -8,7 +8,7 @@ import chalk from 'chalk'
 const debug = require('debug')('tinyBlog:DB')
 
 // Api Routes
-import { postRoutes, userRoutes } from '../services'
+import { metricRoutes, postRoutes, userRoutes } from '../services'
 
 // DB Connection and Associations
 import sequelize from '../db/connection'
@@ -50,6 +50,7 @@ class Server {
     routes() {
         this.app.use('/api/v1/users', userRoutes)
         this.app.use('/api/v1/posts', postRoutes)
+        this.app.use('/api/v1/metrics', metricRoutes)
     }
 
     startDBConnection() {
