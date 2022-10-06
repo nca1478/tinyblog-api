@@ -38,6 +38,18 @@ class MetricService {
             throw err
         }
     }
+
+    async getBlogVisits() {
+        try {
+            const metric = await this.metric.findOne({
+                where: { id: { [Op.ne]: null } },
+            })
+
+            return metric.dataValues
+        } catch (err) {
+            throw err
+        }
+    }
 }
 
 export default MetricService

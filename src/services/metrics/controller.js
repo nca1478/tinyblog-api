@@ -31,6 +31,17 @@ class MetricController extends MetricService {
             res.status(500).json(error)
         }
     }
+
+    async getVisits(req, res) {
+        try {
+            const result = await this.getBlogVisits()
+            const response = responseGET(null, result)
+            return res.status(200).json(response)
+        } catch (err) {
+            const error = responseError([err])
+            res.status(500).json(error)
+        }
+    }
 }
 
 export default MetricController

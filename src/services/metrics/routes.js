@@ -20,6 +20,9 @@ class MetricRouter {
             this.controller = controller
         }
 
+        // Get Blog Num Visits
+        this.router.get('/', this.controller.getVisits.bind(this.controller))
+
         // Update Blog Num Visits
         this.router.put('/', this.controller.updateVisits.bind(this.controller))
     }
