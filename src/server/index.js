@@ -17,7 +17,7 @@ require('../db/associations')
 class Server {
     constructor() {
         this.app = express()
-        this.port = process.env.PORT
+        this.port = process.env.PORT || 4000
 
         // Settings
         this.middlewares()
@@ -41,9 +41,8 @@ class Server {
     }
 
     listen() {
-        const port = process.env.PORT
-        this.app.listen(port, () => {
-            console.log(`${chalk.yellow('[tinyBlog-api:REST]')} Escuchando en puerto ${port}`)
+        this.app.listen(this.port, () => {
+            console.log(`${chalk.yellow('[tinyBlog-api:REST]')} Escuchando en puerto ${this.port}`)
         })
     }
 

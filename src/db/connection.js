@@ -3,11 +3,12 @@ import Sequelize from 'sequelize'
 
 // DB Connection Values
 import { config } from '../config/env'
-const { dbName, dbUser, dbPass, dbHost } = config
+const { dbName, dbUser, dbPass, dbHost, dbPort } = config
 
 // DB Connection (MySQL)
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
     host: dbHost,
+    port: dbPort,
     dialect: 'mysql',
     pool: {
         max: 10,
